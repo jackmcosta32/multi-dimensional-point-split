@@ -35,6 +35,7 @@ executables:
     - -with-rtsopts=-N
     dependencies:
     - trab1-joao-costa
+    - hspec
 
 tests:
   trab1-joao-costa-test:
