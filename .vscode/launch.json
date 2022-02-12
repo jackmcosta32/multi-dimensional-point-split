@@ -1,0 +1,16 @@
+{
+  "version": "2.0.0",
+  "configurations": [
+    {
+      "name": "vscode-haskell",
+      "request": "launch",
+      "args": [
+        "stack build",
+        "stack exec ${workspaceFolderBasename}-exe"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+    }
+  ]
+}
