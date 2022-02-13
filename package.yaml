@@ -47,3 +47,4 @@ tests:
     - -with-rtsopts=-N
     dependencies:
     - trab1-joao-costa
+    - hspec

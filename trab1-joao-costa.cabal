@@ -57,6 +57,9 @@ test-suite trab1-joao-costa-test
   type: exitcode-stdio-1.0
   main-is: Spec.hs
   other-modules:
+      DistancesSpec
+      HelpersSpec
+      PointsSpec
       SpecHelper
       Paths_trab1_joao_costa
   hs-source-dirs:
@@ -64,5 +67,6 @@ test-suite trab1-joao-costa-test
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       base >=4.7 && <5
+    , hspec
     , trab1-joao-costa
   default-language: Haskell2010
