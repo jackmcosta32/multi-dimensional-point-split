@@ -15,14 +15,9 @@ requestFile = do
   readFile inputName
 
 ----------------------------------------------------------------------------------------------------
--- Save File
--- Returns the content of a given file based on its path.
+-- Save Group Point Ids to File
+-- Saves the ids of the points of a certain group as a file.
 ----------------------------------------------------------------------------------------------------
--- saveGroupId2File :: String -> [[Int]] -> IO ()
--- saveGroupId2File "" _ = return ()
--- saveGroupId2File _ [] = return ()
--- saveGroupId2File path ids = do
-  
 _addPointId2File :: Show a => FilePath -> [a] -> IO ()
 _addPointId2File "" _ = return ()
 _addPointId2File _ [] = return ()
