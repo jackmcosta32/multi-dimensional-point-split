@@ -5,25 +5,26 @@ import Connections (connectPoints)
 
 spec :: Spec
 spec = 
-  describe "[Module] Connections" $
-    context "with function connectPoints" $ do
-      it "should sort a list of points by ascending by their euclidean distance" $ do
-        let points = [[1.0,1.0], [5.0,6.0], [2.0,1.0], [33.0,12.0], [5.0,5.0], [26.0,9.0], [33.0,11.0], [25.0,9.0]]
-        putStr "Inital group of points"
-        print points
+  describe "[Function] connectPoints" $ do
+    context "with points = [[1, 1], [5, 6], [2, 1], [33, 12]]" $ do
+      let points = [[1, 1], [5, 6], [2, 1], [33, 12]]
 
-        let connections = connectPoints points
-        putStr "Ordered group of points"
-        print connections
+      it "should return a list where the first point matches the first point of the input list." $ do
+        let result = connectPoints points
+        head result `shouldBe` [1, 1]
 
-        connections `shouldBe` [[1.0,1.0],[2.0,1.0],[5.0,5.0],[5.0,6.0],[25.0,9.0],[26.0,9.0],[33.0,11.0],[33.0,12.0]]
+      it "should order the points on an ascending order, returning [[1, 1], [2, 1], [5, 6], [33, 12]]" $
+        connectPoints points `shouldBe`[[1, 1], [2, 1], [5, 6], [33, 12]]
 
-      it "should match the initial point of the given points list and the first point of the function return" $ do
-        let points = [[5.0,6.0], [2.0,1.0], [26.0,9.0], [33.0,11.0], [25.0,9.0]]
-        let connections = connectPoints points
+    context "with points = [[1, 1], [0, 0], [2, 2]]" $ do
+      let points = [[1, 1], [0, 0], [2, 2]]
 
-        head connections `shouldBe` head points
+      it "should return a list where the first point matches the first point of the input list." $ do
+        let result = connectPoints points
+        head result `shouldBe` [1, 1]
+
+      it "should consider the element position in the list when choosing the nearest point" $
+        connectPoints points `shouldBe`[[1, 1], [0, 0], [2, 2]]
 
 main :: IO ()
 main = hspec spec
-    

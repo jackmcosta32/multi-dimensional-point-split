@@ -65,7 +65,7 @@ spec = do
         arrangeConnections 2 connections `shouldBe` [[[1, 1], [2, 1]], [[5, 5], [5, 6]]]
 
       it "should be able to arrange a connection for k = 3" $
-        arrangeConnections 3 connections `shouldBe` [[[1, 1]], [[2, 1]], [[5, 5], [5, 6]]]
+        arrangeConnections 3 connections `shouldBe` [[[1, 1], [2, 1]], [[5, 5]], [[5, 6]]]
  
       it "should be able to arrange a connection for k = 4" $
         arrangeConnections 4 connections `shouldBe` [[[1, 1]], [[2, 1]], [[5, 5]], [[5, 6]]]
@@ -83,7 +83,7 @@ spec = do
         arrangeConnections 3 connections `shouldBe` [[[1, 1], [2, 1]], [[5, 5], [5, 6]], [[25, 9]]]
  
       it "should be able to arrange a connection for k = 4" $
-        arrangeConnections 4 connections `shouldBe` [[[1, 1]], [[2, 1]], [[5, 5], [5, 6]], [[25, 9]]]
+        arrangeConnections 4 connections `shouldBe` [[[1, 1], [2, 1]], [[5, 5]], [[5, 6]], [[25, 9]]]
  
       it "should be able to arrange a connection for k = 5" $
         arrangeConnections 5 connections `shouldBe` [[[1, 1]], [[2, 1]], [[5, 5]], [[5, 6]], [[25, 9]]]
@@ -101,14 +101,13 @@ spec = do
         arrangeConnections 3 connections `shouldBe` [[[1, 1], [2, 1]], [[5, 5], [5, 6]], [[25, 9], [26, 9]]]
  
       it "should be able to arrange a connection for k = 4" $
-        arrangeConnections 4 connections `shouldBe` [[[1, 1]], [[2, 1]], [[5, 5], [5, 6]], [[25, 9], [26, 9]]]
+        arrangeConnections 4 connections `shouldBe` [[[1, 1], [2, 1]], [[5, 5], [5, 6]], [[25, 9]], [[26, 9]]]
  
       it "should be able to arrange a connection for k = 5" $
-        arrangeConnections 5 connections `shouldBe` [[[1, 1]], [[2, 1]], [[5, 5]], [[5, 6]], [[25, 9], [26, 9]]]
+        arrangeConnections 5 connections `shouldBe` [[[1, 1], [2, 1]], [[5, 5]], [[5, 6]], [[25, 9]], [[26, 9]]]
  
       it "should be able to arrange a connection for k = 6" $
         arrangeConnections 6 connections `shouldBe` [[[1, 1]], [[2, 1]], [[5, 5]], [[5, 6]], [[25, 9]], [[26, 9]]]
 
 main :: IO ()
 main = hspec spec
-    

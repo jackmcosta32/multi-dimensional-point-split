@@ -1,4 +1,6 @@
 module Groups (
+  Group,
+  matchGroupPointIds,
   getBreakpoints,
   prettyPrintGroups,
   arrangeConnections
@@ -7,21 +9,22 @@ module Groups (
 import System.IO
 import Points (Point)
 import Distances (euclideanDistance)
-import Lists (popIndex, findIndex, qSort, popIndexes, findIndexes) 
+import Lists (popIndex, findIndex, qSort, popIndexes, findIndexes)
 
 type Group = [Point]
 
 
 ----------------------------------------------------------------------------------------------------
 -- Get Breakpoints
--- Reorganizes a connection into a list of groups given the amount of groups.
+-- Returns the index of were the connection must be splitted in order to form
+-- the requested amount of groups.
 ----------------------------------------------------------------------------------------------------
 _getBreakpoints :: Int -> [Float] -> [Float] -> [Int] -> [Int]
 _getBreakpoints a _ [] b = b
 _getBreakpoints a [] _ b = b
 _getBreakpoints amount weights weightHelpers breakpoints = do
   let maxWeight = maximum weightHelpers
-  let indexes = take amount (findIndexes maxWeight weights)
+  let indexes = take amount (reverse (findIndexes maxWeight weights))
   let helperIndexes = findIndexes maxWeight weightHelpers
   let newWeightHelpers = popIndexes helperIndexes weightHelpers
   let newBreakPoints = breakpoints ++ indexes
@@ -34,14 +37,14 @@ _getBreakpoints amount weights weightHelpers breakpoints = do
 getBreakpoints :: Int -> [Float] -> [Int]
 getBreakpoints amount weights = do
   let bkpts = _getBreakpoints amount weights weights []
-  [b + 1 | b <- bkpts] 
+  [b + 1 | b <- bkpts]
 
 ----------------------------------------------------------------------------------------------------
 -- Arrange Connections
 -- Reorganizes a connection into a list of groups given the amount of groups.
 ----------------------------------------------------------------------------------------------------
-_splitConnections :: [Int] -> Group -> [Group] -> [Group]
-_splitConnections [] a _ = [a] 
+_splitConnections :: [Int] -> [a] -> [[a]] -> [[a]]
+_splitConnections [] a _ = [a]
 _splitConnections (bkpt:bkpts) connections connectionGroups = do
   let (connectionGroup, newConnections) = splitAt bkpt connections
   let newConnectionGroups = connectionGroups ++ [connectionGroup]
@@ -64,10 +67,30 @@ arrangeConnections amount connections = do
   _splitConnections sortedBkpts connections []
 
 ----------------------------------------------------------------------------------------------------
+-- Match Group Ids 
+-- Converts a group array, replacing their points to the point respective id.
+----------------------------------------------------------------------------------------------------
+-- _connections2Ids :: Eq a => [[a]] -> [a] -> [[Int]] -> [[Int]]
+_matchPointIds :: Eq a => [a] -> [a] -> [Int] -> [Int]
+_matchPointIds [] _ indexes = indexes
+_matchPointIds (currentPoint:group) points indexes = do
+  let index = findIndex currentPoint points + 1
+  _matchPointIds group points (indexes ++ [index])
+
+_matchGroupPointIds :: [Group] -> [Point] -> [[Int]] -> [[Int]]
+_matchGroupPointIds [] _ groupIndexes = groupIndexes
+_matchGroupPointIds (group:groups) points groupIndexes = do
+  let indexes = _matchPointIds group points []
+  _matchGroupPointIds groups points (groupIndexes ++ [indexes])
+
+matchGroupPointIds :: [Group] -> [Point] -> [[Int]]
+matchGroupPointIds groups points = _matchGroupPointIds groups points []
+
+----------------------------------------------------------------------------------------------------
 -- Pretty Print Groups 
 -- Prints a list of groups separating each group per line.
 ----------------------------------------------------------------------------------------------------
-prettyPrintGroups :: [Group] -> IO ()
+prettyPrintGroups :: Show a => [a] -> IO ()
 prettyPrintGroups [] = return ()
 prettyPrintGroups (group:groups) = do
   print group

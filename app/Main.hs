@@ -3,9 +3,9 @@ module Main where
 import System.IO
 import Helpers (str2Int)
 import Points (str2Point)
-import Files (requestFile)
 import Connections (connectPoints)
-import Groups (arrangeConnections, prettyPrintGroups)
+import Files (requestFile, saveGroupPointIds2File)
+import Groups (arrangeConnections, prettyPrintGroups, matchGroupPointIds)
 
 
 main :: IO ()
@@ -17,7 +17,7 @@ main = do
   let connections = connectPoints pts
 
   putStrLn "Forneca o nome do arquivo de saida: "
-  outputName <- getLine
+  outputFilePath <- getLine
 
   putStrLn "Forneca o número de grupos (K): "
   strAmount <- getLine  
@@ -25,6 +25,8 @@ main = do
 
   putStrLn "Agrupamentos:"
   let groups = arrangeConnections amount connections
-  prettyPrintGroups groups
+  let identifiedGroups = matchGroupPointIds groups pts
+  prettyPrintGroups identifiedGroups
+  saveGroupPointIds2File outputFilePath identifiedGroups
 
   return ()

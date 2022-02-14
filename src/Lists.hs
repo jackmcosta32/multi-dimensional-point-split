@@ -41,13 +41,13 @@ popIndexes indexes xs = do
 -- Find Index
 -- Returns the index of the first match of an element in a list where it might be included.
 ----------------------------------------------------------------------------------------------------
-_findIndex :: Float -> [Float] -> Int -> Int
+_findIndex :: Eq a => a -> [a] -> Int -> Int
 _findIndex _ [] _ = -1
 _findIndex x (xx:xxs) i
   | x == xx = i
   | otherwise = _findIndex x xxs (i + 1) 
 
-findIndex :: Float -> [Float] -> Int
+findIndex :: Eq a => a -> [a] -> Int
 findIndex _ [] = -1
 findIndex x xs = _findIndex x xs 0
 
@@ -55,7 +55,7 @@ findIndex x xs = _findIndex x xs 0
 -- Find Indexes
 -- Returns a list of indexes where each element of this lists represents the index of a match.
 ----------------------------------------------------------------------------------------------------
-_findIndexes :: Float -> [Float] -> Int -> [Int] -> [Int]
+_findIndexes :: Eq a => a -> [a] -> Int -> [Int] -> [Int]
 _findIndexes _ [] _ indexes = indexes
 _findIndexes x (xx:xxs) i indexes =
   if x == xx then
@@ -63,7 +63,7 @@ _findIndexes x (xx:xxs) i indexes =
   else
     _findIndexes x xxs (i + 1) indexes
     
-findIndexes :: Float -> [Float] -> [Int]
+findIndexes :: Eq a => a -> [a] -> [Int]
 findIndexes _ [] = []
 findIndexes x xs = _findIndexes x xs 0 []
 
