@@ -57,8 +57,11 @@ test-suite trab1-joao-costa-test
   type: exitcode-stdio-1.0
   main-is: Spec.hs
   other-modules:
+      ConnectionsSpec
       DistancesSpec
+      GroupsSpec
       HelpersSpec
+      ListsSpec
       PointsSpec
       SpecHelper
       Paths_trab1_joao_costa

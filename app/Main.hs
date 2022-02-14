@@ -12,7 +12,7 @@ main :: IO ()
 main = do
   putStrLn "Primeiro Trabalho Computacional - João Costa"
 
-  file <- requestFile
+  file <- requestFile 
   let pts = map str2Point (lines file)
   let connections = connectPoints pts
 
@@ -24,7 +24,7 @@ main = do
   let amount = str2Int strAmount
 
   putStrLn "Agrupamentos:"
-  let groups = arrangeConnections amount connections 
+  let groups = arrangeConnections amount connections
   prettyPrintGroups groups
 
   return ()
