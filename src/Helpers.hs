@@ -1,32 +1,28 @@
-module Helpers where
+module Helpers (
+  str2Int,
+  str2Float,
+  splitString
+) where
 
-import Data.List (elemIndex)
-import Control.Monad(when)
 
-minValue :: Ord a => [a] -> a
-minValue [] = undefined
-minValue [x1] = x1
-minValue [x1, x2] = min x1 x2
-minValue (x1:x2:xs) = min (min x1 x2) (minValue xs)
-
-minValueIndex :: Ord a => [a] -> Maybe Int
-minValueIndex xs = elemIndex (minValue xs) xs
-
-maxValue :: Ord a => [a] -> a
-maxValue [] = undefined
-maxValue [x1] = x1
-maxValue [x1, x2] = max x1 x2
-maxValue (x1:x2:xs) = max (max x1 x2) (maxValue xs)
-
-maxValueIndex :: Ord a => [a] -> Maybe Int
-maxValueIndex xs = elemIndex (maxValue xs) xs
-
+----------------------------------------------------------------------------------------------------
+-- String to Integer
+-- Casts a string into an integer.
+----------------------------------------------------------------------------------------------------
 str2Int :: String -> Int
 str2Int string = read string::Int
 
+----------------------------------------------------------------------------------------------------
+-- String to Float
+-- Casts a string into a float.
+----------------------------------------------------------------------------------------------------
 str2Float :: String -> Float
 str2Float string = read string::Float
 
+----------------------------------------------------------------------------------------------------
+-- Split String
+-- Splits a string at a certain point that fulfill a certain condition.
+----------------------------------------------------------------------------------------------------
 splitString :: (Char -> Bool) -> String -> [String]
 splitString condition string = case dropWhile condition string of
   "" -> []
